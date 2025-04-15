@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>StockYodha - Redirecting...</title>
+  <script type="text/javascript">
+    // Simple redirect script for Single Page Apps on GitHub Pages
+    // It captures the path and query string from the original URL
+    // and redirects to index.html with that path appended as a query parameter.
+    // index.html can then read this parameter and route accordingly.
+
+    // Get the current path excluding the leading slash
+    var path = location.pathname.slice(1);
+    // Get the original search query
+    var search = location.search;
+    // Get the base path from the config (replace with your repo name)
+    var basePath = 'stockyodha-frontend';
+
+    // Construct the redirect URL
+    // We append the original path and search to the index.html
+    // You might need to adjust this depending on how your router consumes the path
+    var redirectUrl = '/' + basePath + '/' + '?p=' + encodeURIComponent(path) + (search ? '&q=' + encodeURIComponent(search.slice(1)) : '') + location.hash;
+
+    // Perform the redirect
+    sessionStorage.redirect = redirectUrl; // Store the redirect URL in session storage
+    location.replace('/' + basePath + '/'); // Redirect to the base index.html
+
+  </script>
+</head>
+<body>
+  <!-- You can add a loading message here -->
+  <p>If you are not redirected automatically, please click <a href="/">here</a>.</p>
+</body>
+</html> 
