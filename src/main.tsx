@@ -56,7 +56,7 @@ function Main() {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={"/stockyodha-frontend"}>
       <Main />
     </BrowserRouter>
   </React.StrictMode>,
