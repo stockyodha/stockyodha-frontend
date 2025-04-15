@@ -1,0 +1,4320 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+    "title": "Virtual Stock Trading Platform",
+    "description": "Virtual Stock Trading Platform API",
+    "version": "1.0.0"
+    },
+    "paths": {
+    "/api/v1/auth/register": {
+    "post": {
+    "tags": [
+    "auth"
+    ],
+    "summary": "Register User",
+    "description": "Register a new user.",
+    "operationId": "register_user_api_v1_auth_register_post",
+    "requestBody": {
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/UserCreate"
+    }
+    }
+    },
+    "required": true
+    },
+    "responses": {
+    "201": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/UserRead"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/api/v1/auth/token": {
+    "post": {
+    "tags": [
+    "auth"
+    ],
+    "summary": "Login For Access Token",
+    "description": "Authenticate user and return JWT access and refresh tokens.\nUses OAuth2PasswordRequestForm for standard form data input (username, password).",
+    "operationId": "login_for_access_token_api_v1_auth_token_post",
+    "requestBody": {
+    "content": {
+    "application/x-www-form-urlencoded": {
+    "schema": {
+    "$ref": "#/components/schemas/Body_login_for_access_token_api_v1_auth_token_post"
+    }
+    }
+    },
+    "required": true
+    },
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/Token"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/api/v1/auth/refresh": {
+    "post": {
+    "tags": [
+    "auth"
+    ],
+    "summary": "Refresh Access Token",
+    "description": "Refreshes the access token using a valid refresh token.",
+    "operationId": "refresh_access_token_api_v1_auth_refresh_post",
+    "requestBody": {
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/RefreshTokenRequest"
+    }
+    }
+    },
+    "required": true
+    },
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/Token"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/api/v1/auth/logout": {
+    "post": {
+    "tags": [
+    "auth"
+    ],
+    "summary": "Logout User",
+    "description": "Logout user by clearing the refresh token cookie.\n(Optionally invalidates server-side refresh token if implemented).",
+    "operationId": "logout_user_api_v1_auth_logout_post",
+    "responses": {
+    "204": {
+    "description": "Successful Response"
+    }
+    }
+    }
+    },
+    "/api/v1/users/me": {
+    "get": {
+    "tags": [
+    "users"
+    ],
+    "summary": "Read Current User",
+    "description": "Get current authenticated user's profile.",
+    "operationId": "read_current_user_api_v1_users_me_get",
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/UserRead"
+    }
+    }
+    }
+    }
+    },
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ]
+    },
+    "put": {
+    "tags": [
+    "users"
+    ],
+    "summary": "Update Current User Profile",
+    "description": "Update current user's profile (e.g., first/last name).",
+    "operationId": "update_current_user_profile_api_v1_users_me_put",
+    "requestBody": {
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/UserUpdate"
+    }
+    }
+    },
+    "required": true
+    },
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/UserRead"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    },
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ]
+    }
+    },
+    "/api/v1/users/me/password": {
+    "patch": {
+    "tags": [
+    "users"
+    ],
+    "summary": "Update Current User Password",
+    "description": "Change current user's password.",
+    "operationId": "update_current_user_password_api_v1_users_me_password_patch",
+    "requestBody": {
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/UserPasswordUpdate"
+    }
+    }
+    },
+    "required": true
+    },
+    "responses": {
+    "204": {
+    "description": "Successful Response"
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    },
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ]
+    }
+    },
+    "/api/v1/portfolios/": {
+    "post": {
+    "tags": [
+    "portfolios"
+    ],
+    "summary": "Create Portfolio Endpoint",
+    "operationId": "create_portfolio_endpoint_api_v1_portfolios__post",
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ],
+    "requestBody": {
+    "required": true,
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/PortfolioCreate"
+    }
+    }
+    }
+    },
+    "responses": {
+    "201": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/PortfolioRead"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    },
+    "get": {
+    "tags": [
+    "portfolios"
+    ],
+    "summary": "Read Portfolios Endpoint",
+    "operationId": "read_portfolios_endpoint_api_v1_portfolios__get",
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ],
+    "parameters": [
+    {
+    "name": "skip",
+    "in": "query",
+    "required": false,
+    "schema": {
+    "type": "integer",
+    "default": 0,
+    "title": "Skip"
+    }
+    },
+    {
+    "name": "limit",
+    "in": "query",
+    "required": false,
+    "schema": {
+    "type": "integer",
+    "maximum": 100,
+    "default": 50,
+    "title": "Limit"
+    }
+    }
+    ],
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "type": "array",
+    "items": {
+    "$ref": "#/components/schemas/PortfolioRead"
+    },
+    "title": "Response Read Portfolios Endpoint Api V1 Portfolios  Get"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/api/v1/portfolios/{portfolio_id}": {
+    "get": {
+    "tags": [
+    "portfolios"
+    ],
+    "summary": "Read Portfolio Endpoint",
+    "operationId": "read_portfolio_endpoint_api_v1_portfolios__portfolio_id__get",
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ],
+    "parameters": [
+    {
+    "name": "portfolio_id",
+    "in": "path",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "format": "uuid",
+    "title": "Portfolio Id"
+    }
+    }
+    ],
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/PortfolioRead"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    },
+    "put": {
+    "tags": [
+    "portfolios"
+    ],
+    "summary": "Update Portfolio Endpoint",
+    "operationId": "update_portfolio_endpoint_api_v1_portfolios__portfolio_id__put",
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ],
+    "parameters": [
+    {
+    "name": "portfolio_id",
+    "in": "path",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "format": "uuid",
+    "title": "Portfolio Id"
+    }
+    }
+    ],
+    "requestBody": {
+    "required": true,
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/PortfolioUpdate"
+    }
+    }
+    }
+    },
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/PortfolioRead"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    },
+    "delete": {
+    "tags": [
+    "portfolios"
+    ],
+    "summary": "Delete Portfolio Endpoint",
+    "operationId": "delete_portfolio_endpoint_api_v1_portfolios__portfolio_id__delete",
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ],
+    "parameters": [
+    {
+    "name": "portfolio_id",
+    "in": "path",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "format": "uuid",
+    "title": "Portfolio Id"
+    }
+    }
+    ],
+    "responses": {
+    "204": {
+    "description": "Successful Response"
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/api/v1/portfolios/{portfolio_id}/holdings": {
+    "get": {
+    "tags": [
+    "portfolios"
+    ],
+    "summary": "Get Portfolio Holdings Endpoint",
+    "description": "Retrieve the current holdings for a specific portfolio owned by the user.",
+    "operationId": "get_portfolio_holdings_endpoint_api_v1_portfolios__portfolio_id__holdings_get",
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ],
+    "parameters": [
+    {
+    "name": "portfolio_id",
+    "in": "path",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "format": "uuid",
+    "title": "Portfolio Id"
+    }
+    },
+    {
+    "name": "skip",
+    "in": "query",
+    "required": false,
+    "schema": {
+    "type": "integer",
+    "minimum": 0,
+    "default": 0,
+    "title": "Skip"
+    }
+    },
+    {
+    "name": "limit",
+    "in": "query",
+    "required": false,
+    "schema": {
+    "type": "integer",
+    "maximum": 100,
+    "default": 50,
+    "title": "Limit"
+    }
+    }
+    ],
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "type": "array",
+    "items": {
+    "$ref": "#/components/schemas/HoldingRead"
+    },
+    "title": "Response Get Portfolio Holdings Endpoint Api V1 Portfolios  Portfolio Id  Holdings Get"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/api/v1/portfolios/{portfolio_id}/transactions": {
+    "get": {
+    "tags": [
+    "portfolios"
+    ],
+    "summary": "Get Portfolio Transactions Endpoint",
+    "description": "Retrieve the transaction history for a specific portfolio owned by the user.",
+    "operationId": "get_portfolio_transactions_endpoint_api_v1_portfolios__portfolio_id__transactions_get",
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ],
+    "parameters": [
+    {
+    "name": "portfolio_id",
+    "in": "path",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "format": "uuid",
+    "title": "Portfolio Id"
+    }
+    },
+    {
+    "name": "skip",
+    "in": "query",
+    "required": false,
+    "schema": {
+    "type": "integer",
+    "minimum": 0,
+    "default": 0,
+    "title": "Skip"
+    }
+    },
+    {
+    "name": "limit",
+    "in": "query",
+    "required": false,
+    "schema": {
+    "type": "integer",
+    "maximum": 100,
+    "default": 50,
+    "title": "Limit"
+    }
+    }
+    ],
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "type": "array",
+    "items": {
+    "$ref": "#/components/schemas/TransactionRead"
+    },
+    "title": "Response Get Portfolio Transactions Endpoint Api V1 Portfolios  Portfolio Id  Transactions Get"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/api/v1/portfolios/{portfolio_id}/performance": {
+    "get": {
+    "tags": [
+    "portfolios"
+    ],
+    "summary": "Get Portfolio Performance Endpoint",
+    "description": "Retrieve basic performance metrics for a specific portfolio owned by the user.\nCalculates unrealized P/L based on current holdings and latest prices.",
+    "operationId": "get_portfolio_performance_endpoint_api_v1_portfolios__portfolio_id__performance_get",
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ],
+    "parameters": [
+    {
+    "name": "portfolio_id",
+    "in": "path",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "format": "uuid",
+    "title": "Portfolio Id"
+    }
+    }
+    ],
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/PortfolioPerformance"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/api/v1/watchlists": {
+    "post": {
+    "tags": [
+    "watchlists"
+    ],
+    "summary": "Create New Watchlist",
+    "description": "Create a new watchlist for the current user.",
+    "operationId": "create_new_watchlist_api_v1_watchlists_post",
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ],
+    "requestBody": {
+    "required": true,
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/WatchlistCreate"
+    }
+    }
+    }
+    },
+    "responses": {
+    "201": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/WatchlistRead"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    },
+    "get": {
+    "tags": [
+    "watchlists"
+    ],
+    "summary": "List User Watchlists",
+    "description": "List all watchlists belonging to the current user.",
+    "operationId": "list_user_watchlists_api_v1_watchlists_get",
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ],
+    "parameters": [
+    {
+    "name": "skip",
+    "in": "query",
+    "required": false,
+    "schema": {
+    "type": "integer",
+    "minimum": 0,
+    "default": 0,
+    "title": "Skip"
+    }
+    },
+    {
+    "name": "limit",
+    "in": "query",
+    "required": false,
+    "schema": {
+    "type": "integer",
+    "maximum": 100,
+    "default": 50,
+    "title": "Limit"
+    }
+    }
+    ],
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "type": "array",
+    "items": {
+    "$ref": "#/components/schemas/WatchlistRead"
+    },
+    "title": "Response List User Watchlists Api V1 Watchlists Get"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/api/v1/watchlists/{watchlist_id}": {
+    "get": {
+    "tags": [
+    "watchlists"
+    ],
+    "summary": "Get Watchlist Details",
+    "description": "Get details of a specific watchlist owned by the current user, including calculated performance. Uses caching.",
+    "operationId": "get_watchlist_details_api_v1_watchlists__watchlist_id__get",
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ],
+    "parameters": [
+    {
+    "name": "watchlist_id",
+    "in": "path",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "format": "uuid",
+    "title": "Watchlist Id"
+    }
+    }
+    ],
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/WatchlistRead"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    },
+    "put": {
+    "tags": [
+    "watchlists"
+    ],
+    "summary": "Update Existing Watchlist",
+    "description": "Update a watchlist's details (e.g., name).",
+    "operationId": "update_existing_watchlist_api_v1_watchlists__watchlist_id__put",
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ],
+    "parameters": [
+    {
+    "name": "watchlist_id",
+    "in": "path",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "format": "uuid",
+    "title": "Watchlist Id"
+    }
+    }
+    ],
+    "requestBody": {
+    "required": true,
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/WatchlistUpdate"
+    }
+    }
+    }
+    },
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/WatchlistRead"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    },
+    "delete": {
+    "tags": [
+    "watchlists"
+    ],
+    "summary": "Delete Existing Watchlist",
+    "description": "Delete a watchlist owned by the current user.",
+    "operationId": "delete_existing_watchlist_api_v1_watchlists__watchlist_id__delete",
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ],
+    "parameters": [
+    {
+    "name": "watchlist_id",
+    "in": "path",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "format": "uuid",
+    "title": "Watchlist Id"
+    }
+    }
+    ],
+    "responses": {
+    "204": {
+    "description": "Successful Response"
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/api/v1/watchlists/{watchlist_id}/set-default": {
+    "post": {
+    "tags": [
+    "watchlists"
+    ],
+    "summary": "Set Watchlist As Default",
+    "description": "Set the specified watchlist as the default for the current user.",
+    "operationId": "set_watchlist_as_default_api_v1_watchlists__watchlist_id__set_default_post",
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ],
+    "parameters": [
+    {
+    "name": "watchlist_id",
+    "in": "path",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "format": "uuid",
+    "title": "Watchlist Id"
+    }
+    }
+    ],
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/WatchlistRead"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/api/v1/watchlists/default/stocks": {
+    "post": {
+    "tags": [
+    "watchlists"
+    ],
+    "summary": "Add Stock To Default Watchlist",
+    "description": "Add a stock listing to the user's default watchlist.",
+    "operationId": "add_stock_to_default_watchlist_api_v1_watchlists_default_stocks_post",
+    "requestBody": {
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/StockIdentifier"
+    }
+    }
+    },
+    "required": true
+    },
+    "responses": {
+    "201": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/WatchlistStockRead"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    },
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ]
+    }
+    },
+    "/api/v1/watchlists/{watchlist_id}/stocks": {
+    "post": {
+    "tags": [
+    "watchlists"
+    ],
+    "summary": "Add Stock To Existing Watchlist",
+    "description": "Add a stock listing to a specific watchlist.",
+    "operationId": "add_stock_to_existing_watchlist_api_v1_watchlists__watchlist_id__stocks_post",
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ],
+    "parameters": [
+    {
+    "name": "watchlist_id",
+    "in": "path",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "format": "uuid",
+    "title": "Watchlist Id"
+    }
+    }
+    ],
+    "requestBody": {
+    "required": true,
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/StockIdentifier"
+    }
+    }
+    }
+    },
+    "responses": {
+    "201": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/WatchlistStockRead"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    },
+    "get": {
+    "tags": [
+    "watchlists"
+    ],
+    "summary": "List Stocks In Watchlist",
+    "description": "List all stock listings within a specific watchlist, including stock details.",
+    "operationId": "list_stocks_in_watchlist_api_v1_watchlists__watchlist_id__stocks_get",
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ],
+    "parameters": [
+    {
+    "name": "watchlist_id",
+    "in": "path",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "format": "uuid",
+    "title": "Watchlist Id"
+    }
+    },
+    {
+    "name": "skip",
+    "in": "query",
+    "required": false,
+    "schema": {
+    "type": "integer",
+    "minimum": 0,
+    "default": 0,
+    "title": "Skip"
+    }
+    },
+    {
+    "name": "limit",
+    "in": "query",
+    "required": false,
+    "schema": {
+    "type": "integer",
+    "maximum": 100,
+    "minimum": 1,
+    "default": 50,
+    "title": "Limit"
+    }
+    }
+    ],
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "type": "array",
+    "items": {
+    "$ref": "#/components/schemas/WatchlistStockRead"
+    },
+    "title": "Response List Stocks In Watchlist Api V1 Watchlists  Watchlist Id  Stocks Get"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/api/v1/watchlists/{watchlist_id}/stocks/{exchange}/{symbol}": {
+    "delete": {
+    "tags": [
+    "watchlists"
+    ],
+    "summary": "Remove Stock From Existing Watchlist",
+    "description": "Remove a stock listing from a specific watchlist.",
+    "operationId": "remove_stock_from_existing_watchlist_api_v1_watchlists__watchlist_id__stocks__exchange___symbol__delete",
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ],
+    "parameters": [
+    {
+    "name": "watchlist_id",
+    "in": "path",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "format": "uuid",
+    "title": "Watchlist Id"
+    }
+    },
+    {
+    "name": "exchange",
+    "in": "path",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "title": "Exchange"
+    }
+    },
+    {
+    "name": "symbol",
+    "in": "path",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "title": "Symbol"
+    }
+    }
+    ],
+    "responses": {
+    "204": {
+    "description": "Successful Response"
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/api/v1/notifications": {
+    "get": {
+    "tags": [
+    "notifications"
+    ],
+    "summary": "List User Notifications",
+    "description": "List notifications for the current user.",
+    "operationId": "list_user_notifications_api_v1_notifications_get",
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ],
+    "parameters": [
+    {
+    "name": "unread_only",
+    "in": "query",
+    "required": false,
+    "schema": {
+    "type": "boolean",
+    "description": "Filter to show only unread notifications",
+    "default": false,
+    "title": "Unread Only"
+    },
+    "description": "Filter to show only unread notifications"
+    },
+    {
+    "name": "skip",
+    "in": "query",
+    "required": false,
+    "schema": {
+    "type": "integer",
+    "minimum": 0,
+    "default": 0,
+    "title": "Skip"
+    }
+    },
+    {
+    "name": "limit",
+    "in": "query",
+    "required": false,
+    "schema": {
+    "type": "integer",
+    "maximum": 100,
+    "minimum": 1,
+    "default": 50,
+    "title": "Limit"
+    }
+    }
+    ],
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "type": "array",
+    "items": {
+    "$ref": "#/components/schemas/NotificationRead"
+    },
+    "title": "Response List User Notifications Api V1 Notifications Get"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/api/v1/notifications/{notification_id}": {
+    "patch": {
+    "tags": [
+    "notifications"
+    ],
+    "summary": "Mark Notification Read",
+    "description": "Mark a specific notification as read.",
+    "operationId": "mark_notification_read_api_v1_notifications__notification_id__patch",
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ],
+    "parameters": [
+    {
+    "name": "notification_id",
+    "in": "path",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "format": "uuid",
+    "title": "Notification Id"
+    }
+    }
+    ],
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/NotificationRead"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/api/v1/notifications/mark-all-read": {
+    "post": {
+    "tags": [
+    "notifications"
+    ],
+    "summary": "Mark All Notifications Read",
+    "description": "Mark all unread notifications for the current user as read.",
+    "operationId": "mark_all_notifications_read_api_v1_notifications_mark_all_read_post",
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {}
+    }
+    }
+    }
+    },
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ]
+    }
+    },
+    "/api/v1/stocks": {
+    "get": {
+    "tags": [
+    "stocks"
+    ],
+    "summary": "List Stocks",
+    "description": "Retrieve a list of available stock listings.",
+    "operationId": "list_stocks_api_v1_stocks_get",
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ],
+    "parameters": [
+    {
+    "name": "skip",
+    "in": "query",
+    "required": false,
+    "schema": {
+    "type": "integer",
+    "minimum": 0,
+    "default": 0,
+    "title": "Skip"
+    }
+    },
+    {
+    "name": "limit",
+    "in": "query",
+    "required": false,
+    "schema": {
+    "type": "integer",
+    "maximum": 100,
+    "minimum": 1,
+    "default": 50,
+    "title": "Limit"
+    }
+    },
+    {
+    "name": "exchange",
+    "in": "query",
+    "required": false,
+    "schema": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "description": "Filter by exchange (e.g., nse, bse)",
+    "title": "Exchange"
+    },
+    "description": "Filter by exchange (e.g., nse, bse)"
+    }
+    ],
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "type": "array",
+    "items": {
+    "$ref": "#/components/schemas/StockRead"
+    },
+    "title": "Response List Stocks Api V1 Stocks Get"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/api/v1/stocks/search": {
+    "get": {
+    "tags": [
+    "stocks"
+    ],
+    "summary": "Search Stocks",
+    "description": "Search for stock listings by symbol or name, optionally filtered by exchange.",
+    "operationId": "search_stocks_api_v1_stocks_search_get",
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ],
+    "parameters": [
+    {
+    "name": "query",
+    "in": "query",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "minLength": 1,
+    "description": "Search term for symbol or name",
+    "title": "Query"
+    },
+    "description": "Search term for symbol or name"
+    },
+    {
+    "name": "exchange",
+    "in": "query",
+    "required": false,
+    "schema": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "description": "Filter by exchange (e.g., nse, bse)",
+    "title": "Exchange"
+    },
+    "description": "Filter by exchange (e.g., nse, bse)"
+    },
+    {
+    "name": "limit",
+    "in": "query",
+    "required": false,
+    "schema": {
+    "type": "integer",
+    "maximum": 50,
+    "minimum": 1,
+    "default": 10,
+    "title": "Limit"
+    }
+    }
+    ],
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "type": "array",
+    "items": {
+    "$ref": "#/components/schemas/StockRead"
+    },
+    "title": "Response Search Stocks Api V1 Stocks Search Get"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/api/v1/stocks/{exchange}/{symbol}": {
+    "get": {
+    "tags": [
+    "stocks"
+    ],
+    "summary": "Get Stock Details",
+    "description": "Retrieve detailed information for a specific stock listing,\nidentified by its exchange and symbol.\nIncludes dynamic market data from stock_info.",
+    "operationId": "get_stock_details_api_v1_stocks__exchange___symbol__get",
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ],
+    "parameters": [
+    {
+    "name": "exchange",
+    "in": "path",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "title": "Exchange"
+    }
+    },
+    {
+    "name": "symbol",
+    "in": "path",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "title": "Symbol"
+    }
+    }
+    ],
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/StockRead"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/api/v1/stocks/{exchange}/{symbol}/history": {
+    "get": {
+    "tags": [
+    "stocks"
+    ],
+    "summary": "Get Stock History",
+    "description": "Retrieve historical OHLCV data for a specific stock listing from Moneycontrol.\n\n**Note:** This currently only supports the **NSE** exchange as the underlying API is specific.\nRequests for other exchanges will be rejected.",
+    "operationId": "get_stock_history_api_v1_stocks__exchange___symbol__history_get",
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ],
+    "parameters": [
+    {
+    "name": "exchange",
+    "in": "path",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "title": "Exchange"
+    }
+    },
+    {
+    "name": "symbol",
+    "in": "path",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "title": "Symbol"
+    }
+    },
+    {
+    "name": "resolution",
+    "in": "query",
+    "required": true,
+    "schema": {
+    "$ref": "#/components/schemas/HistoryResolution",
+    "description": "Time resolution for data points (e.g., 1, 5, 30, 60, 1D)"
+    },
+    "description": "Time resolution for data points (e.g., 1, 5, 30, 60, 1D)"
+    },
+    {
+    "name": "from",
+    "in": "query",
+    "required": true,
+    "schema": {
+    "type": "integer",
+    "description": "Start timestamp (Unix seconds)",
+    "title": "From"
+    },
+    "description": "Start timestamp (Unix seconds)"
+    },
+    {
+    "name": "to",
+    "in": "query",
+    "required": true,
+    "schema": {
+    "type": "integer",
+    "description": "End timestamp (Unix seconds)",
+    "title": "To"
+    },
+    "description": "End timestamp (Unix seconds)"
+    },
+    {
+    "name": "countback",
+    "in": "query",
+    "required": false,
+    "schema": {
+    "anyOf": [
+    {
+    "type": "integer"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "description": "Moneycontrol specific parameter",
+    "title": "Countback"
+    },
+    "description": "Moneycontrol specific parameter"
+    }
+    ],
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "type": "array",
+    "items": {
+    "$ref": "#/components/schemas/StockHistoryDataPoint"
+    },
+    "title": "Response Get Stock History Api V1 Stocks  Exchange   Symbol  History Get"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/api/v1/stocks/{exchange}/{symbol}/news": {
+    "get": {
+    "tags": [
+    "stocks"
+    ],
+    "summary": "Get Stock News",
+    "description": "Retrieve related news articles for a specific stock listing.",
+    "operationId": "get_stock_news_api_v1_stocks__exchange___symbol__news_get",
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ],
+    "parameters": [
+    {
+    "name": "exchange",
+    "in": "path",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "title": "Exchange"
+    }
+    },
+    {
+    "name": "symbol",
+    "in": "path",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "title": "Symbol"
+    }
+    },
+    {
+    "name": "limit",
+    "in": "query",
+    "required": false,
+    "schema": {
+    "type": "integer",
+    "maximum": 50,
+    "minimum": 1,
+    "default": 10,
+    "title": "Limit"
+    }
+    }
+    ],
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "type": "array",
+    "items": {
+    "$ref": "#/components/schemas/NewsRead"
+    },
+    "title": "Response Get Stock News Api V1 Stocks  Exchange   Symbol  News Get"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/api/v1/orders": {
+    "post": {
+    "tags": [
+    "orders"
+    ],
+    "summary": "Place New Order",
+    "description": "Place a new Market or Limit order. Rejects if market is closed.",
+    "operationId": "place_new_order_api_v1_orders_post",
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ],
+    "requestBody": {
+    "required": true,
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/OrderCreate"
+    }
+    }
+    }
+    },
+    "responses": {
+    "201": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/OrderRead"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    },
+    "get": {
+    "tags": [
+    "orders"
+    ],
+    "summary": "List User Orders",
+    "description": "List orders for the current user, optionally filtered by status.",
+    "operationId": "list_user_orders_api_v1_orders_get",
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ],
+    "parameters": [
+    {
+    "name": "status",
+    "in": "query",
+    "required": false,
+    "schema": {
+    "anyOf": [
+    {
+    "$ref": "#/components/schemas/OrderStatus"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "description": "Filter orders by status",
+    "title": "Status"
+    },
+    "description": "Filter orders by status"
+    },
+    {
+    "name": "skip",
+    "in": "query",
+    "required": false,
+    "schema": {
+    "type": "integer",
+    "minimum": 0,
+    "default": 0,
+    "title": "Skip"
+    }
+    },
+    {
+    "name": "limit",
+    "in": "query",
+    "required": false,
+    "schema": {
+    "type": "integer",
+    "maximum": 100,
+    "minimum": 1,
+    "default": 50,
+    "title": "Limit"
+    }
+    }
+    ],
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "type": "array",
+    "items": {
+    "$ref": "#/components/schemas/OrderRead"
+    },
+    "title": "Response List User Orders Api V1 Orders Get"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/api/v1/orders/{order_id}": {
+    "get": {
+    "tags": [
+    "orders"
+    ],
+    "summary": "Get Order Details",
+    "description": "Get details of a specific order owned by the current user.",
+    "operationId": "get_order_details_api_v1_orders__order_id__get",
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ],
+    "parameters": [
+    {
+    "name": "order_id",
+    "in": "path",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "format": "uuid",
+    "title": "Order Id"
+    }
+    }
+    ],
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/OrderRead"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    },
+    "delete": {
+    "tags": [
+    "orders"
+    ],
+    "summary": "Cancel Pending Order",
+    "description": "Cancel a PENDING order owned by the current user.",
+    "operationId": "cancel_pending_order_api_v1_orders__order_id__delete",
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ],
+    "parameters": [
+    {
+    "name": "order_id",
+    "in": "path",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "format": "uuid",
+    "title": "Order Id"
+    }
+    }
+    ],
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/OrderRead"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/api/v1/admin/users": {
+    "get": {
+    "tags": [
+    "admin"
+    ],
+    "summary": "List All Users",
+    "description": "[Admin] List all users in the system.",
+    "operationId": "list_all_users_api_v1_admin_users_get",
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ],
+    "parameters": [
+    {
+    "name": "skip",
+    "in": "query",
+    "required": false,
+    "schema": {
+    "type": "integer",
+    "minimum": 0,
+    "default": 0,
+    "title": "Skip"
+    }
+    },
+    {
+    "name": "limit",
+    "in": "query",
+    "required": false,
+    "schema": {
+    "type": "integer",
+    "maximum": 100,
+    "minimum": 1,
+    "default": 50,
+    "title": "Limit"
+    }
+    }
+    ],
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "type": "array",
+    "items": {
+    "$ref": "#/components/schemas/UserRead"
+    },
+    "title": "Response List All Users Api V1 Admin Users Get"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/api/v1/admin/users/{user_id}/set-admin/{is_admin}": {
+    "patch": {
+    "tags": [
+    "admin"
+    ],
+    "summary": "Set User Admin Status",
+    "description": "(Admin) Set the admin status for a specific user.",
+    "operationId": "set_user_admin_status_api_v1_admin_users__user_id__set_admin__is_admin__patch",
+    "security": [
+    {
+    "OAuth2PasswordBearer": []
+    }
+    ],
+    "parameters": [
+    {
+    "name": "user_id",
+    "in": "path",
+    "required": true,
+    "schema": {
+    "type": "string",
+    "format": "uuid",
+    "title": "User Id"
+    }
+    },
+    {
+    "name": "is_admin",
+    "in": "path",
+    "required": true,
+    "schema": {
+    "type": "boolean",
+    "title": "Is Admin"
+    }
+    }
+    ],
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/UserRead"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/api/v1/news/recent": {
+    "get": {
+    "tags": [
+    "news"
+    ],
+    "summary": "Get Recent News Endpoint",
+    "description": "Get recent news articles published globally.",
+    "operationId": "get_recent_news_endpoint_api_v1_news_recent_get",
+    "parameters": [
+    {
+    "name": "last_seconds",
+    "in": "query",
+    "required": true,
+    "schema": {
+    "type": "integer",
+    "exclusiveMinimum": 0,
+    "description": "Fetch news published in the last N seconds",
+    "title": "Last Seconds"
+    },
+    "description": "Fetch news published in the last N seconds"
+    },
+    {
+    "name": "limit",
+    "in": "query",
+    "required": false,
+    "schema": {
+    "type": "integer",
+    "maximum": 500,
+    "exclusiveMinimum": 0,
+    "description": "Maximum number of news items to return",
+    "default": 100,
+    "title": "Limit"
+    },
+    "description": "Maximum number of news items to return"
+    }
+    ],
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "type": "array",
+    "items": {
+    "$ref": "#/components/schemas/NewsReadWithAgo"
+    },
+    "title": "Response Get Recent News Endpoint Api V1 News Recent Get"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/api/v1/market/status": {
+    "get": {
+    "tags": [
+    "market"
+    ],
+    "summary": "Get Market Status",
+    "description": "Get the current status of the Indian stock market (NSE/BSE).\nReturns whether the market is OPEN, CLOSED, or UNKNOWN (if timings cannot be retrieved).\nIncludes market open and close times for the current IST date if available.",
+    "operationId": "get_market_status_api_v1_market_status_get",
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/MarketStatusResponse"
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/api/v1/market/trends": {
+    "get": {
+    "tags": [
+    "market"
+    ],
+    "summary": "Get Top Market Trends (Gainers/Losers) by Index",
+    "description": "Fetches the top gainers or losers for a specified NIFTY index from the Groww API.",
+    "operationId": "get_market_trends_api_v1_market_trends_get",
+    "parameters": [
+    {
+    "name": "index",
+    "in": "query",
+    "required": false,
+    "schema": {
+    "$ref": "#/components/schemas/MarketIndex",
+    "description": "Specify the market index to fetch trends for.",
+    "default": "SYNIFTY100"
+    },
+    "description": "Specify the market index to fetch trends for."
+    },
+    {
+    "name": "type",
+    "in": "query",
+    "required": false,
+    "schema": {
+    "enum": [
+    "TOP_GAINERS",
+    "TOP_LOSERS"
+    ],
+    "type": "string",
+    "description": "Specify whether to fetch top gainers or top losers.",
+    "default": "TOP_GAINERS",
+    "title": "Type"
+    },
+    "description": "Specify whether to fetch top gainers or top losers."
+    },
+    {
+    "name": "limit",
+    "in": "query",
+    "required": false,
+    "schema": {
+    "type": "integer",
+    "maximum": 60,
+    "exclusiveMinimum": 0,
+    "description": "Number of items to return.",
+    "default": 10,
+    "title": "Limit"
+    },
+    "description": "Number of items to return."
+    }
+    ],
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {
+    "type": "array",
+    "items": {
+    "$ref": "#/components/schemas/TrendItem"
+    },
+    "title": "Response Get Market Trends Api V1 Market Trends Get"
+    }
+    }
+    }
+    },
+    "422": {
+    "description": "Validation Error",
+    "content": {
+    "application/json": {
+    "schema": {
+    "$ref": "#/components/schemas/HTTPValidationError"
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "/": {
+    "get": {
+    "summary": "Read Root",
+    "description": "Basic health check endpoint.",
+    "operationId": "read_root__get",
+    "responses": {
+    "200": {
+    "description": "Successful Response",
+    "content": {
+    "application/json": {
+    "schema": {}
+    }
+    }
+    }
+    }
+    }
+    }
+    },
+    "components": {
+    "schemas": {
+    "Body_login_for_access_token_api_v1_auth_token_post": {
+    "properties": {
+    "grant_type": {
+    "anyOf": [
+    {
+    "type": "string",
+    "pattern": "password"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Grant Type"
+    },
+    "username": {
+    "type": "string",
+    "title": "Username"
+    },
+    "password": {
+    "type": "string",
+    "title": "Password"
+    },
+    "scope": {
+    "type": "string",
+    "title": "Scope",
+    "default": ""
+    },
+    "client_id": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Client Id"
+    },
+    "client_secret": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Client Secret"
+    }
+    },
+    "type": "object",
+    "required": [
+    "username",
+    "password"
+    ],
+    "title": "Body_login_for_access_token_api_v1_auth_token_post"
+    },
+    "CompanyData": {
+    "properties": {
+    "isin": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Isin"
+    },
+    "company_name": {
+    "type": "string",
+    "title": "Company Name"
+    },
+    "search_id": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Search Id"
+    },
+    "bse_script_code": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Bse Script Code"
+    },
+    "nse_script_code": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Nse Script Code"
+    },
+    "company_short_name": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Company Short Name"
+    },
+    "logo_url": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Logo Url"
+    },
+    "market_cap": {
+    "anyOf": [
+    {
+    "type": "number"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Market Cap"
+    },
+    "equity_type": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Equity Type"
+    },
+    "groww_contract_id": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Groww Contract Id"
+    }
+    },
+    "type": "object",
+    "required": [
+    "company_name"
+    ],
+    "title": "CompanyData"
+    },
+    "HTTPValidationError": {
+    "properties": {
+    "detail": {
+    "items": {
+    "$ref": "#/components/schemas/ValidationError"
+    },
+    "type": "array",
+    "title": "Detail"
+    }
+    },
+    "type": "object",
+    "title": "HTTPValidationError"
+    },
+    "HistoryResolution": {
+    "type": "string",
+    "enum": [
+    "1",
+    "5",
+    "30",
+    "60",
+    "1D"
+    ],
+    "title": "HistoryResolution"
+    },
+    "HoldingRead": {
+    "properties": {
+    "portfolio_id": {
+    "type": "string",
+    "format": "uuid",
+    "title": "Portfolio Id"
+    },
+    "stock_symbol": {
+    "type": "string",
+    "title": "Stock Symbol"
+    },
+    "stock_exchange": {
+    "type": "string",
+    "title": "Stock Exchange"
+    },
+    "quantity": {
+    "type": "integer",
+    "title": "Quantity"
+    },
+    "average_buy_price": {
+    "type": "string",
+    "title": "Average Buy Price"
+    }
+    },
+    "type": "object",
+    "required": [
+    "portfolio_id",
+    "stock_symbol",
+    "stock_exchange",
+    "quantity",
+    "average_buy_price"
+    ],
+    "title": "HoldingRead"
+    },
+    "MarketIndex": {
+    "type": "string",
+    "enum": [
+    "SYNIFTY100",
+    "SYNIFSMCP100",
+    "SYNIFMDCP100",
+    "SYNIFTY500"
+    ],
+    "title": "MarketIndex"
+    },
+    "MarketStatusResponse": {
+    "properties": {
+    "status": {
+    "type": "string",
+    "title": "Status",
+    "description": "Current market status (OPEN, CLOSED, UNKNOWN)"
+    },
+    "open_time_ist": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Open Time Ist",
+    "description": "Market open time in HH:MM:SS format (IST)"
+    },
+    "close_time_ist": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Close Time Ist",
+    "description": "Market close time in HH:MM:SS format (IST)"
+    },
+    "current_time_ist": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Current Time Ist",
+    "description": "Current server time in HH:MM:SS format (IST) for context"
+    },
+    "error": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Error",
+    "description": "Error message if status is UNKNOWN"
+    }
+    },
+    "type": "object",
+    "required": [
+    "status"
+    ],
+    "title": "MarketStatusResponse"
+    },
+    "NewsRead": {
+    "properties": {
+    "title": {
+    "type": "string",
+    "maxLength": 512,
+    "title": "Title"
+    },
+    "description": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Description"
+    },
+    "url": {
+    "anyOf": [
+    {
+    "type": "string",
+    "maxLength": 1024
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Url"
+    },
+    "image_url": {
+    "anyOf": [
+    {
+    "type": "string",
+    "maxLength": 1024
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Image Url"
+    },
+    "content": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Content"
+    },
+    "source": {
+    "anyOf": [
+    {
+    "type": "string",
+    "maxLength": 100
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Source"
+    },
+    "published_at": {
+    "anyOf": [
+    {
+    "type": "string",
+    "format": "date-time"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Published At"
+    },
+    "is_analyzed": {
+    "type": "boolean",
+    "title": "Is Analyzed",
+    "default": false
+    },
+    "id": {
+    "type": "string",
+    "format": "uuid",
+    "title": "Id"
+    },
+    "created_at": {
+    "type": "string",
+    "format": "date-time",
+    "title": "Created At"
+    },
+    "updated_at": {
+    "anyOf": [
+    {
+    "type": "string",
+    "format": "date-time"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Updated At"
+    }
+    },
+    "type": "object",
+    "required": [
+    "title",
+    "id",
+    "created_at",
+    "updated_at"
+    ],
+    "title": "NewsRead"
+    },
+    "NewsReadWithAgo": {
+    "properties": {
+    "title": {
+    "type": "string",
+    "title": "Title"
+    },
+    "description": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Description"
+    },
+    "url": {
+    "anyOf": [
+    {
+    "type": "string",
+    "maxLength": 2083,
+    "minLength": 1,
+    "format": "uri"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Url"
+    },
+    "image_url": {
+    "anyOf": [
+    {
+    "type": "string",
+    "maxLength": 2083,
+    "minLength": 1,
+    "format": "uri"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Image Url"
+    },
+    "content": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Content"
+    },
+    "source": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Source"
+    },
+    "published_at": {
+    "anyOf": [
+    {
+    "type": "string",
+    "format": "date-time"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Published At"
+    },
+    "id": {
+    "type": "string",
+    "format": "uuid",
+    "title": "Id"
+    },
+    "created_at": {
+    "type": "string",
+    "format": "date-time",
+    "title": "Created At"
+    },
+    "updated_at": {
+    "anyOf": [
+    {
+    "type": "string",
+    "format": "date-time"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Updated At"
+    },
+    "ago": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Ago"
+    }
+    },
+    "type": "object",
+    "required": [
+    "title",
+    "id",
+    "created_at",
+    "updated_at"
+    ],
+    "title": "NewsReadWithAgo"
+    },
+    "NotificationRead": {
+    "properties": {
+    "user_id": {
+    "type": "string",
+    "format": "uuid",
+    "title": "User Id"
+    },
+    "message": {
+    "type": "string",
+    "title": "Message"
+    },
+    "type": {
+    "$ref": "#/components/schemas/NotificationType"
+    },
+    "related_entity_id": {
+    "anyOf": [
+    {
+    "type": "string",
+    "format": "uuid"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Related Entity Id"
+    },
+    "is_read": {
+    "type": "boolean",
+    "title": "Is Read",
+    "default": false
+    },
+    "id": {
+    "type": "string",
+    "format": "uuid",
+    "title": "Id"
+    },
+    "created_at": {
+    "type": "string",
+    "format": "date-time",
+    "title": "Created At"
+    }
+    },
+    "type": "object",
+    "required": [
+    "user_id",
+    "message",
+    "type",
+    "id",
+    "created_at"
+    ],
+    "title": "NotificationRead"
+    },
+    "NotificationType": {
+    "type": "string",
+    "enum": [
+    "ORDER_EXECUTED",
+    "ORDER_FAILED",
+    "ORDER_CANCELLED",
+    "SYSTEM_ANNOUNCEMENT"
+    ],
+    "title": "NotificationType"
+    },
+    "OrderCreate": {
+    "properties": {
+    "portfolio_id": {
+    "type": "string",
+    "format": "uuid",
+    "title": "Portfolio Id"
+    },
+    "stock_symbol": {
+    "type": "string",
+    "title": "Stock Symbol"
+    },
+    "stock_exchange": {
+    "type": "string",
+    "title": "Stock Exchange"
+    },
+    "order_type": {
+    "$ref": "#/components/schemas/OrderType"
+    },
+    "transaction_type": {
+    "$ref": "#/components/schemas/TransactionType"
+    },
+    "quantity": {
+    "type": "integer",
+    "title": "Quantity"
+    },
+    "limit_price": {
+    "anyOf": [
+    {
+    "type": "number"
+    },
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Limit Price"
+    }
+    },
+    "type": "object",
+    "required": [
+    "portfolio_id",
+    "stock_symbol",
+    "stock_exchange",
+    "order_type",
+    "transaction_type",
+    "quantity"
+    ],
+    "title": "OrderCreate"
+    },
+    "OrderRead": {
+    "properties": {
+    "user_id": {
+    "type": "string",
+    "format": "uuid",
+    "title": "User Id"
+    },
+    "portfolio_id": {
+    "type": "string",
+    "format": "uuid",
+    "title": "Portfolio Id"
+    },
+    "stock_symbol": {
+    "type": "string",
+    "maxLength": 20,
+    "title": "Stock Symbol"
+    },
+    "stock_exchange": {
+    "type": "string",
+    "maxLength": 50,
+    "title": "Stock Exchange"
+    },
+    "order_type": {
+    "$ref": "#/components/schemas/OrderType"
+    },
+    "transaction_type": {
+    "$ref": "#/components/schemas/TransactionType"
+    },
+    "quantity": {
+    "type": "integer",
+    "exclusiveMinimum": 0,
+    "title": "Quantity"
+    },
+    "limit_price": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Limit Price"
+    },
+    "status": {
+    "$ref": "#/components/schemas/OrderStatus",
+    "default": "PENDING"
+    },
+    "executed_price": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Executed Price"
+    },
+    "executed_at": {
+    "anyOf": [
+    {
+    "type": "string",
+    "format": "date-time"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Executed At"
+    },
+    "failure_reason": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Failure Reason"
+    },
+    "funds_held": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Funds Held"
+    },
+    "shares_held": {
+    "anyOf": [
+    {
+    "type": "integer"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Shares Held"
+    },
+    "id": {
+    "type": "string",
+    "format": "uuid",
+    "title": "Id"
+    },
+    "created_at": {
+    "type": "string",
+    "format": "date-time",
+    "title": "Created At"
+    },
+    "updated_at": {
+    "anyOf": [
+    {
+    "type": "string",
+    "format": "date-time"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Updated At"
+    }
+    },
+    "type": "object",
+    "required": [
+    "user_id",
+    "portfolio_id",
+    "stock_symbol",
+    "stock_exchange",
+    "order_type",
+    "transaction_type",
+    "quantity",
+    "funds_held",
+    "shares_held",
+    "id",
+    "created_at",
+    "updated_at"
+    ],
+    "title": "OrderRead"
+    },
+    "OrderStatus": {
+    "type": "string",
+    "enum": [
+    "PENDING",
+    "EXECUTED",
+    "CANCELLED",
+    "FAILED"
+    ],
+    "title": "OrderStatus"
+    },
+    "OrderType": {
+    "type": "string",
+    "enum": [
+    "MARKET",
+    "LIMIT"
+    ],
+    "title": "OrderType"
+    },
+    "PortfolioCreate": {
+    "properties": {
+    "name": {
+    "type": "string",
+    "title": "Name"
+    },
+    "description": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Description"
+    }
+    },
+    "type": "object",
+    "required": [
+    "name"
+    ],
+    "title": "PortfolioCreate"
+    },
+    "PortfolioPerformance": {
+    "properties": {
+    "portfolio_id": {
+    "type": "string",
+    "format": "uuid",
+    "title": "Portfolio Id"
+    },
+    "total_cost_basis": {
+    "type": "string",
+    "title": "Total Cost Basis"
+    },
+    "current_market_value": {
+    "type": "string",
+    "title": "Current Market Value"
+    },
+    "total_unrealized_pl": {
+    "type": "string",
+    "title": "Total Unrealized Pl"
+    },
+    "total_unrealized_pl_percentage": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Total Unrealized Pl Percentage"
+    },
+    "calculation_timestamp": {
+    "type": "string",
+    "format": "date-time",
+    "title": "Calculation Timestamp"
+    },
+    "missing_price_data": {
+    "items": {
+    "type": "string"
+    },
+    "type": "array",
+    "title": "Missing Price Data"
+    }
+    },
+    "type": "object",
+    "required": [
+    "portfolio_id",
+    "total_cost_basis",
+    "current_market_value",
+    "total_unrealized_pl",
+    "calculation_timestamp",
+    "missing_price_data"
+    ],
+    "title": "PortfolioPerformance"
+    },
+    "PortfolioRead": {
+    "properties": {
+    "name": {
+    "type": "string",
+    "title": "Name"
+    },
+    "description": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Description"
+    },
+    "id": {
+    "type": "string",
+    "format": "uuid",
+    "title": "Id"
+    },
+    "user_id": {
+    "type": "string",
+    "format": "uuid",
+    "title": "User Id"
+    },
+    "created_at": {
+    "type": "string",
+    "format": "date-time",
+    "title": "Created At"
+    },
+    "updated_at": {
+    "type": "string",
+    "format": "date-time",
+    "title": "Updated At"
+    }
+    },
+    "type": "object",
+    "required": [
+    "name",
+    "id",
+    "user_id",
+    "created_at",
+    "updated_at"
+    ],
+    "title": "PortfolioRead"
+    },
+    "PortfolioUpdate": {
+    "properties": {
+    "name": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Name"
+    },
+    "description": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Description"
+    }
+    },
+    "type": "object",
+    "title": "PortfolioUpdate"
+    },
+    "RefreshTokenRequest": {
+    "properties": {
+    "refresh_token": {
+    "type": "string",
+    "title": "Refresh Token"
+    }
+    },
+    "type": "object",
+    "required": [
+    "refresh_token"
+    ],
+    "title": "RefreshTokenRequest"
+    },
+    "StatsData": {
+    "properties": {
+    "ltp": {
+    "type": "number",
+    "title": "Ltp"
+    },
+    "close": {
+    "anyOf": [
+    {
+    "type": "number"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Close"
+    },
+    "day_change": {
+    "anyOf": [
+    {
+    "type": "number"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Day Change"
+    },
+    "day_change_perc": {
+    "anyOf": [
+    {
+    "type": "number"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Day Change Perc"
+    },
+    "high": {
+    "anyOf": [
+    {
+    "type": "number"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "High"
+    },
+    "low": {
+    "anyOf": [
+    {
+    "type": "number"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Low"
+    },
+    "year_high_price": {
+    "anyOf": [
+    {
+    "type": "number"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Year High Price"
+    },
+    "year_low_price": {
+    "anyOf": [
+    {
+    "type": "number"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Year Low Price"
+    },
+    "lpr": {
+    "anyOf": [
+    {
+    "type": "number"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Lpr"
+    },
+    "upr": {
+    "anyOf": [
+    {
+    "type": "number"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Upr"
+    }
+    },
+    "type": "object",
+    "required": [
+    "ltp"
+    ],
+    "title": "StatsData"
+    },
+    "StockHistoryDataPoint": {
+    "properties": {
+    "t": {
+    "type": "integer",
+    "title": "T",
+    "description": "Unix timestamp (seconds)"
+    },
+    "o": {
+    "type": "number",
+    "title": "O"
+    },
+    "h": {
+    "type": "number",
+    "title": "H"
+    },
+    "l": {
+    "type": "number",
+    "title": "L"
+    },
+    "c": {
+    "type": "number",
+    "title": "C"
+    },
+    "v": {
+    "type": "integer",
+    "title": "V"
+    }
+    },
+    "type": "object",
+    "required": [
+    "t",
+    "o",
+    "h",
+    "l",
+    "c",
+    "v"
+    ],
+    "title": "StockHistoryDataPoint"
+    },
+    "StockIdentifier": {
+    "properties": {
+    "exchange": {
+    "type": "string",
+    "title": "Exchange"
+    },
+    "symbol": {
+    "type": "string",
+    "title": "Symbol"
+    }
+    },
+    "type": "object",
+    "required": [
+    "exchange",
+    "symbol"
+    ],
+    "title": "StockIdentifier"
+    },
+    "StockInfoBase": {
+    "properties": {
+    "mcid": {
+    "type": "string",
+    "title": "Mcid"
+    },
+    "industry": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Industry"
+    },
+    "sector": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Sector"
+    },
+    "face_value": {
+    "anyOf": [
+    {
+    "type": "number"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Face Value"
+    },
+    "current_price": {
+    "anyOf": [
+    {
+    "type": "number"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Current Price"
+    },
+    "bid_price": {
+    "anyOf": [
+    {
+    "type": "number"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Bid Price"
+    },
+    "offer_price": {
+    "anyOf": [
+    {
+    "type": "number"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Offer Price"
+    },
+    "price_prev_close": {
+    "anyOf": [
+    {
+    "type": "number"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Price Prev Close"
+    },
+    "price_change": {
+    "anyOf": [
+    {
+    "type": "number"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Price Change"
+    },
+    "price_percent_change": {
+    "anyOf": [
+    {
+    "type": "number"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Price Percent Change"
+    },
+    "day_high": {
+    "anyOf": [
+    {
+    "type": "number"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Day High"
+    },
+    "day_low": {
+    "anyOf": [
+    {
+    "type": "number"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Day Low"
+    },
+    "volume": {
+    "anyOf": [
+    {
+    "type": "integer"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Volume"
+    },
+    "last_price_update_at": {
+    "anyOf": [
+    {
+    "type": "string",
+    "format": "date-time"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Last Price Update At"
+    }
+    },
+    "type": "object",
+    "required": [
+    "mcid"
+    ],
+    "title": "StockInfoBase"
+    },
+    "StockRead": {
+    "properties": {
+    "symbol": {
+    "type": "string",
+    "title": "Symbol"
+    },
+    "exchange": {
+    "type": "string",
+    "title": "Exchange"
+    },
+    "name": {
+    "type": "string",
+    "title": "Name"
+    },
+    "isinid": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Isinid"
+    },
+    "description": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Description"
+    },
+    "id": {
+    "type": "integer",
+    "title": "Id"
+    },
+    "stock_info": {
+    "anyOf": [
+    {
+    "$ref": "#/components/schemas/StockInfoBase"
+    },
+    {
+    "type": "null"
+    }
+    ]
+    }
+    },
+    "type": "object",
+    "required": [
+    "symbol",
+    "exchange",
+    "name",
+    "id"
+    ],
+    "title": "StockRead"
+    },
+    "Token": {
+    "properties": {
+    "access_token": {
+    "type": "string",
+    "title": "Access Token"
+    },
+    "refresh_token": {
+    "type": "string",
+    "title": "Refresh Token"
+    },
+    "token_type": {
+    "type": "string",
+    "title": "Token Type",
+    "default": "bearer"
+    }
+    },
+    "type": "object",
+    "required": [
+    "access_token",
+    "refresh_token"
+    ],
+    "title": "Token"
+    },
+    "TransactionRead": {
+    "properties": {
+    "id": {
+    "type": "string",
+    "format": "uuid",
+    "title": "Id"
+    },
+    "order_id": {
+    "type": "string",
+    "format": "uuid",
+    "title": "Order Id"
+    },
+    "user_id": {
+    "type": "string",
+    "format": "uuid",
+    "title": "User Id"
+    },
+    "portfolio_id": {
+    "type": "string",
+    "format": "uuid",
+    "title": "Portfolio Id"
+    },
+    "stock_symbol": {
+    "type": "string",
+    "title": "Stock Symbol"
+    },
+    "stock_exchange": {
+    "type": "string",
+    "title": "Stock Exchange"
+    },
+    "transaction_type": {
+    "$ref": "#/components/schemas/TransactionType"
+    },
+    "quantity": {
+    "type": "integer",
+    "title": "Quantity"
+    },
+    "price_per_share": {
+    "type": "string",
+    "title": "Price Per Share"
+    },
+    "total_amount": {
+    "type": "string",
+    "title": "Total Amount"
+    },
+    "transaction_time": {
+    "type": "string",
+    "format": "date-time",
+    "title": "Transaction Time"
+    }
+    },
+    "type": "object",
+    "required": [
+    "id",
+    "order_id",
+    "user_id",
+    "portfolio_id",
+    "stock_symbol",
+    "stock_exchange",
+    "transaction_type",
+    "quantity",
+    "price_per_share",
+    "total_amount",
+    "transaction_time"
+    ],
+    "title": "TransactionRead"
+    },
+    "TransactionType": {
+    "type": "string",
+    "enum": [
+    "BUY",
+    "SELL"
+    ],
+    "title": "TransactionType"
+    },
+    "TrendItem": {
+    "properties": {
+    "gsin": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Gsin"
+    },
+    "company": {
+    "$ref": "#/components/schemas/CompanyData"
+    },
+    "stats": {
+    "$ref": "#/components/schemas/StatsData"
+    }
+    },
+    "type": "object",
+    "required": [
+    "company",
+    "stats"
+    ],
+    "title": "TrendItem"
+    },
+    "UserCreate": {
+    "properties": {
+    "username": {
+    "type": "string",
+    "maxLength": 50,
+    "title": "Username"
+    },
+    "email": {
+    "type": "string",
+    "maxLength": 255,
+    "title": "Email"
+    },
+    "first_name": {
+    "anyOf": [
+    {
+    "type": "string",
+    "maxLength": 100
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "First Name"
+    },
+    "last_name": {
+    "anyOf": [
+    {
+    "type": "string",
+    "maxLength": 100
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Last Name"
+    },
+    "is_active": {
+    "type": "boolean",
+    "title": "Is Active",
+    "default": true
+    },
+    "is_admin": {
+    "type": "boolean",
+    "title": "Is Admin",
+    "default": false
+    },
+    "password": {
+    "type": "string",
+    "format": "password",
+    "title": "Password",
+    "writeOnly": true
+    }
+    },
+    "type": "object",
+    "required": [
+    "username",
+    "email",
+    "password"
+    ],
+    "title": "UserCreate"
+    },
+    "UserPasswordUpdate": {
+    "properties": {
+    "current_password": {
+    "type": "string",
+    "title": "Current Password"
+    },
+    "new_password": {
+    "type": "string",
+    "title": "New Password"
+    }
+    },
+    "type": "object",
+    "required": [
+    "current_password",
+    "new_password"
+    ],
+    "title": "UserPasswordUpdate"
+    },
+    "UserRead": {
+    "properties": {
+    "username": {
+    "type": "string",
+    "maxLength": 50,
+    "title": "Username"
+    },
+    "email": {
+    "type": "string",
+    "maxLength": 255,
+    "title": "Email"
+    },
+    "first_name": {
+    "anyOf": [
+    {
+    "type": "string",
+    "maxLength": 100
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "First Name"
+    },
+    "last_name": {
+    "anyOf": [
+    {
+    "type": "string",
+    "maxLength": 100
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Last Name"
+    },
+    "is_active": {
+    "type": "boolean",
+    "title": "Is Active",
+    "default": true
+    },
+    "is_admin": {
+    "type": "boolean",
+    "title": "Is Admin",
+    "default": false
+    },
+    "id": {
+    "type": "string",
+    "format": "uuid",
+    "title": "Id"
+    },
+    "virtual_balance": {
+    "type": "string",
+    "title": "Virtual Balance"
+    },
+    "funds_on_hold": {
+    "type": "string",
+    "title": "Funds On Hold"
+    },
+    "created_at": {
+    "type": "string",
+    "format": "date-time",
+    "title": "Created At"
+    },
+    "updated_at": {
+    "anyOf": [
+    {
+    "type": "string",
+    "format": "date-time"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Updated At"
+    }
+    },
+    "type": "object",
+    "required": [
+    "username",
+    "email",
+    "id",
+    "virtual_balance",
+    "funds_on_hold",
+    "created_at",
+    "updated_at"
+    ],
+    "title": "UserRead"
+    },
+    "UserUpdate": {
+    "properties": {
+    "first_name": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "First Name"
+    },
+    "last_name": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Last Name"
+    },
+    "email": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Email"
+    },
+    "is_active": {
+    "anyOf": [
+    {
+    "type": "boolean"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Is Active"
+    },
+    "is_admin": {
+    "anyOf": [
+    {
+    "type": "boolean"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Is Admin"
+    }
+    },
+    "type": "object",
+    "title": "UserUpdate"
+    },
+    "ValidationError": {
+    "properties": {
+    "loc": {
+    "items": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "integer"
+    }
+    ]
+    },
+    "type": "array",
+    "title": "Location"
+    },
+    "msg": {
+    "type": "string",
+    "title": "Message"
+    },
+    "type": {
+    "type": "string",
+    "title": "Error Type"
+    }
+    },
+    "type": "object",
+    "required": [
+    "loc",
+    "msg",
+    "type"
+    ],
+    "title": "ValidationError"
+    },
+    "WatchlistCreate": {
+    "properties": {
+    "name": {
+    "type": "string",
+    "maxLength": 100,
+    "title": "Name"
+    }
+    },
+    "type": "object",
+    "required": [
+    "name"
+    ],
+    "title": "WatchlistCreate"
+    },
+    "WatchlistRead": {
+    "properties": {
+    "name": {
+    "type": "string",
+    "maxLength": 100,
+    "title": "Name"
+    },
+    "id": {
+    "type": "string",
+    "format": "uuid",
+    "title": "Id"
+    },
+    "user_id": {
+    "type": "string",
+    "format": "uuid",
+    "title": "User Id"
+    },
+    "created_at": {
+    "type": "string",
+    "format": "date-time",
+    "title": "Created At"
+    },
+    "updated_at": {
+    "anyOf": [
+    {
+    "type": "string",
+    "format": "date-time"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Updated At"
+    },
+    "is_default": {
+    "type": "boolean",
+    "title": "Is Default"
+    },
+    "initial_total_value": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Initial Total Value"
+    },
+    "current_total_value": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Current Total Value"
+    },
+    "total_change_absolute": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Total Change Absolute"
+    },
+    "total_change_percent": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Total Change Percent"
+    }
+    },
+    "type": "object",
+    "required": [
+    "name",
+    "id",
+    "user_id",
+    "created_at",
+    "updated_at",
+    "is_default"
+    ],
+    "title": "WatchlistRead"
+    },
+    "WatchlistStockRead": {
+    "properties": {
+    "stock_symbol": {
+    "type": "string",
+    "title": "Stock Symbol"
+    },
+    "stock_exchange": {
+    "type": "string",
+    "title": "Stock Exchange"
+    },
+    "added_at": {
+    "type": "string",
+    "format": "date-time",
+    "title": "Added At"
+    },
+    "price_at_add": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Price At Add"
+    },
+    "stock_name": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Stock Name"
+    },
+    "current_price": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Current Price"
+    },
+    "change_absolute": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Change Absolute"
+    },
+    "change_percent": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Change Percent"
+    }
+    },
+    "type": "object",
+    "required": [
+    "stock_symbol",
+    "stock_exchange",
+    "added_at",
+    "price_at_add"
+    ],
+    "title": "WatchlistStockRead"
+    },
+    "WatchlistUpdate": {
+    "properties": {
+    "name": {
+    "anyOf": [
+    {
+    "type": "string"
+    },
+    {
+    "type": "null"
+    }
+    ],
+    "title": "Name"
+    }
+    },
+    "type": "object",
+    "title": "WatchlistUpdate"
+    }
+    },
+    "securitySchemes": {
+    "OAuth2PasswordBearer": {
+    "type": "oauth2",
+    "flows": {
+    "password": {
+    "scopes": {},
+    "tokenUrl": "/api/v1/auth/login"
+    }
+    }
+    }
+    }
+    }
+    }
