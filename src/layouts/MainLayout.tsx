@@ -1,7 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import { Sidebar } from '@/components/layout/Sidebar';
 import { Topbar } from '@/components/layout/Topbar';
-import { cn } from "@/lib/utils"
 
 export default function MainLayout() {
   return (

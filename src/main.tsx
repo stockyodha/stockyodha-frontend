@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import { BrowserRouter } from 'react-router-dom'
@@ -7,7 +7,6 @@ import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import { ThemeProvider } from "./components/providers/theme-provider" // Import the provider
 import { Toaster } from "@/components/ui/sonner" // Import Toaster
-import { useAuthStore } from './store/authStore'; // Import auth store
 // Import React Query
 import {
   QueryClient,

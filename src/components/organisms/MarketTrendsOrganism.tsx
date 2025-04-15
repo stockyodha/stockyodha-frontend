@@ -12,7 +12,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
 
 // Map internal index enum values to user-friendly names
 const indexDisplayNames: Record<MarketIndex, string> = {

@@ -2,8 +2,6 @@ import { create } from 'zustand';
 import { UserRead } from '../types/userTypes';
 import { getCurrentUser } from '../services/userService'; // Import userService function
 
-// Use the specific types needed, not the full MantineColorScheme which includes 'auto'
-type ColorScheme = 'light' | 'dark';
 
 type AuthState = {
   accessToken: string | null;

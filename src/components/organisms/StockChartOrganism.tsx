@@ -11,7 +11,6 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Legend,
   TooltipProps
 } from 'recharts';
 import { NameType, ValueType } from 'recharts/types/component/DefaultTooltipContent';
@@ -19,7 +18,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Skeleton } from '@/components/ui/skeleton';
 import { AlertTriangle, Loader2 } from 'lucide-react';
 import { formatCurrency } from '@/lib/utils';
-import { cn } from "@/lib/utils";
 
 interface StockChartOrganismProps {
   exchange: string;

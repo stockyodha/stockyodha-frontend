@@ -9,17 +9,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Search, Bell, Moon, Sun, LogOut, User, Settings } from "lucide-react"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Bell, Moon, Sun, LogOut, Settings } from "lucide-react"
 import { useTheme } from "@/components/providers/theme-provider"
 import { cn } from "@/lib/utils"
 import { useAuthStore } from "@/store/authStore";
 import StockSearchInput from '@/components/molecules/StockSearchInput';
 import StockSearchResultsDropdown from '@/components/organisms/StockSearchResultsDropdown';
 import type { StockRead } from '@/types/stockTypes';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { addStockToDefaultWatchlist } from '@/services/watchlistService';
-import type { StockIdentifier } from '@/types/watchlistTypes';
 import { toast } from 'sonner';
 
 interface TopbarProps extends React.HTMLAttributes<HTMLDivElement> {}
@@ -29,7 +28,6 @@ export function Topbar({ className }: TopbarProps) {
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const [searchResults, setSearchResults] = useState<StockRead[]>([]);
   const [isLoadingSearch, setIsLoadingSearch] = useState(false);
   const [searchError, setSearchError] = useState<Error | null>(null);

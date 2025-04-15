@@ -9,8 +9,7 @@ import {
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
-import { DollarSign, TrendingUp, Newspaper, Eye, Loader2, AlertTriangle } from "lucide-react"
+import { DollarSign, TrendingUp, Eye, Loader2 } from "lucide-react"
 import { useAuthStore } from "@/store/authStore"
 import { getPortfolios, getPortfolioPerformance } from "@/services/portfolioService"
 import { getWatchlists, getWatchlistStocks } from "@/services/watchlistService"
@@ -18,7 +17,6 @@ import { Link } from "react-router-dom"
 import { formatCurrency, getChangeColor } from "@/lib/utils"
 import NewsCardOrganism from "@/components/organisms/NewsCardOrganism"
 import MarketTrendsOrganism from "@/components/organisms/MarketTrendsOrganism";
-import type { StockRead } from "@/types/stockTypes"; // Ensure StockRead is imported if not already
 import { WatchlistStockRead } from "@/types/watchlistTypes"; // Import the corrected type
 
 export default function DashboardPage() {
@@ -28,7 +26,7 @@ export default function DashboardPage() {
   // --- Data Fetching --- 
 
   // Fetch first portfolio
-  const { data: portfolios, isLoading: isLoadingPortfolios, error: portfolioError } = useQuery({
+  const { data: portfolios, isLoading: isLoadingPortfolios } = useQuery({
     queryKey: ['portfolios', { limit: 1 }],
     queryFn: () => getPortfolios(1),
     staleTime: 1000 * 60 * 5, // Cache for 5 minutes
@@ -44,7 +42,7 @@ export default function DashboardPage() {
   });
 
   // Fetch first watchlist
-  const { data: watchlists, isLoading: isLoadingWatchlists, error: watchlistError } = useQuery({
+  const { data: watchlists, isLoading: isLoadingWatchlists } = useQuery({
     queryKey: ['watchlists', { limit: 1 }],
     queryFn: () => getWatchlists(1),
     staleTime: 1000 * 60 * 5,
@@ -64,8 +62,6 @@ export default function DashboardPage() {
   });
   
   // --- Loading and Error States --- 
-  const isLoading = isLoadingPortfolios || isLoadingPerformance || isLoadingWatchlists || isLoadingWatchlistStocks;
-  const queryError = portfolioError || performanceError || watchlistError || watchlistStocksError;
 
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">

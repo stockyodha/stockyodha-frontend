@@ -12,20 +12,14 @@ import {
     Star,
     Settings, // Added for potential settings link
 } from 'lucide-react'; // Added necessary icons
-import { useTheme } from "@/components/providers/theme-provider"; // Import useTheme
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> { }
 
 export function Sidebar({ className }: SidebarProps) {
     const [isCollapsed, setIsCollapsed] = useState(false);
-    const { theme, setTheme } = useTheme(); // Get theme state and setter
 
     const toggleSidebar = () => {
         setIsCollapsed(!isCollapsed);
-    };
-
-    const toggleTheme = () => {
-        setTheme(theme === "light" ? "dark" : "light");
     };
 
     const navItems = [

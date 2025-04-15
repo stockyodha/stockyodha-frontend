@@ -1,6 +1,5 @@
 import apiClient from '../config/api';
 import type { WatchlistRead, WatchlistStockRead, StockIdentifier, WatchlistCreate } from '../types/watchlistTypes'; // Added WatchlistCreate
-import type { StockRead } from '../types/stockTypes'; // Need StockRead for param type below
 import { AxiosError } from 'axios'; // Import AxiosError for type checking
 
 export const getWatchlists = async (limit: number = 10, skip: number = 0): Promise<WatchlistRead[]> => {

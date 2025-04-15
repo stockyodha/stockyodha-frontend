@@ -7,7 +7,6 @@ import StockManagementMolecule from '@/components/molecules/StockManagementMolec
 import StockAddressesMolecule from '@/components/molecules/StockAddressesMolecule';
 import StockNewsOrganism from '@/components/organisms/StockNewsOrganism';
 import StockChartOrganism from '@/components/organisms/StockChartOrganism';
-import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 // Import other potential organisms like Chart, News etc. when created
 

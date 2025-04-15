@@ -12,8 +12,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Card, CardContent } from "@/components/ui/card";
-import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
 import {
@@ -36,7 +34,7 @@ const WatchlistsTemplate: React.FC = () => {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [watchlistIdToDelete, setWatchlistIdToDelete] = useState<string | null>(null);
 
-  const { data: watchlists, isLoading, error: fetchError, isError: isFetchError, refetch } = useQuery<WatchlistRead[], Error>({
+  const { data: watchlists, isLoading, isError: isFetchError, refetch } = useQuery<WatchlistRead[], Error>({
     queryKey: ["watchlists"],
     queryFn: () => getWatchlists(),
     staleTime: 1000 * 60 * 5,

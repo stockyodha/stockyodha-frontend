@@ -1,4 +1,3 @@
-import React from 'react';
 import { formatCurrency } from '@/lib/utils';
 import { ChartTooltipContent } from "@/components/ui/chart"; // Use Shadcn's wrapper for consistent styling
 

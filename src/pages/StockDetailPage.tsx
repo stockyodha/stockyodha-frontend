@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getStockDetails } from '@/services/stockService';
-import { Loader2, AlertTriangle } from 'lucide-react';
+import { AlertTriangle } from 'lucide-react';
 import StockDetailTemplate from '@/components/templates/StockDetailTemplate';
 
 const StockDetailPage: React.FC = () => {
@@ -13,9 +13,7 @@ const StockDetailPage: React.FC = () => {
   const { 
     data: stockData, 
     isLoading,
-    isError,
-    error
-  } = useQuery({
+    isError  } = useQuery({
     // Ensure queryKey is unique and includes parameters
     queryKey: ['stockDetails', exchange, symbol],
     queryFn: () => {
