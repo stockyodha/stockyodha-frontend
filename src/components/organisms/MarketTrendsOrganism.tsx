@@ -119,7 +119,7 @@ const MarketTrendsOrganism: React.FC<MarketTrendsOrganismProps> = ({
              <CardTitle className="text-lg">Market Trends</CardTitle>
              <CardDescription>Top movers in the {indexDisplayNames[selectedIndex]} index.</CardDescription>
           </div>
-           <div className="w-full sm:w-auto min-w-[180px]">
+           <div className="w-full sm:w-auto">
              <Select value={selectedIndex} onValueChange={(value) => setSelectedIndex(value as MarketIndex)}>
                <SelectTrigger id="market-index" aria-label="Select Market Index">
                  <SelectValue placeholder="Select index" />

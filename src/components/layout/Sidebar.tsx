@@ -6,10 +6,10 @@ import {
     PanelLeftOpen,
     LayoutDashboard,
     Briefcase,
-    CandlestickChart,
     ListOrdered,
     Star,
     Settings, // Added for potential settings link
+    Newspaper, // Added News icon
 } from 'lucide-react'; // Added necessary icons
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -23,9 +23,9 @@ export function Sidebar({ className, isMobile = false, onLinkClick, isCollapsed 
     const navItems = [
         { to: "/", label: "Dashboard", icon: LayoutDashboard },
         { to: "/portfolios", label: "Portfolios", icon: Briefcase },
-        { to: "/stocks", label: "Stocks", icon: CandlestickChart },
         { to: "/orders", label: "Orders", icon: ListOrdered },
         { to: "/watchlists", label: "Watchlists", icon: Star },
+        { to: "/news", label: "News", icon: Newspaper },
     ];
 
     return (
