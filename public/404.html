@@ -13,17 +13,15 @@
     var path = location.pathname.slice(1);
     // Get the original search query
     var search = location.search;
-    // Get the base path from the config (replace with your repo name)
-    var basePath = 'stockyodha-frontend';
 
     // Construct the redirect URL
     // We append the original path and search to the index.html
     // You might need to adjust this depending on how your router consumes the path
-    var redirectUrl = '/' + basePath + '/' + '?p=' + encodeURIComponent(path) + (search ? '&q=' + encodeURIComponent(search.slice(1)) : '') + location.hash;
+    var redirectUrl = '/'  + '?p=' + encodeURIComponent(path) + (search ? '&q=' + encodeURIComponent(search.slice(1)) : '') + location.hash;
 
     // Perform the redirect
     sessionStorage.redirect = redirectUrl; // Store the redirect URL in session storage
-    location.replace('/' + basePath + '/'); // Redirect to the base index.html
+    location.replace('/'); // Redirect to the base index.html
 
   </script>
 </head>

@@ -35,6 +35,12 @@ apiClient.interceptors.response.use(
     // Basic check for unauthorized error and if it's not a retry attempt
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true; // Mark as retry attempt
+
+      // If the failed request was the login attempt itself, let LoginPage handle it.
+      if (originalRequest.url === '/auth/token') {
+        return Promise.reject(error);
+      }
+
       const { refreshToken, setTokens, logout } = useAuthStore.getState();
 
       if (refreshToken) {
