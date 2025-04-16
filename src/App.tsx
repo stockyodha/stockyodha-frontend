@@ -11,6 +11,7 @@ import OrdersPage from './pages/OrdersPage';
 import WatchlistsPage from './pages/WatchlistsPage';
 import SettingsPage from './pages/SettingsPage';
 import StockDetailPage from './pages/StockDetailPage';
+import PortfolioPage from './pages/PortfoliosPage';
 // Import other pages as they are created
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Route path="watchlists" element={<WatchlistsPage />} />
           <Route path="settings" element={<SettingsPage />} />
           <Route path="stocks/:exchange/:symbol" element={<StockDetailPage />} />
+          <Route path="portfolios/:portfolioId" element={<PortfolioPage />} />
           {/* Example: <Route path="profile" element={<ProfilePage />} /> */}
         </Route>
       </Route>
