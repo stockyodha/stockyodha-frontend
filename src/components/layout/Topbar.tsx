@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Bell, Moon, Sun, LogOut, Settings } from "lucide-react"
+import { Bell, Moon, Sun, LogOut, Settings, Menu } from "lucide-react"
 import { useTheme } from "@/components/providers/theme-provider"
 import { cn } from "@/lib/utils"
 import { useAuthStore } from "@/store/authStore";
@@ -21,9 +21,11 @@ import { useMutation } from '@tanstack/react-query';
 import { addStockToDefaultWatchlist } from '@/services/watchlistService';
 import { toast } from 'sonner';
 
-interface TopbarProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface TopbarProps extends React.HTMLAttributes<HTMLDivElement> {
+  onMobileMenuClick?: () => void;
+}
 
-export function Topbar({ className }: TopbarProps) {
+export function Topbar({ className, onMobileMenuClick }: TopbarProps) {
   const { theme, setTheme } = useTheme()
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
@@ -129,6 +131,17 @@ export function Topbar({ className }: TopbarProps) {
 
   return (
     <header className={cn("sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:px-6", className)}>
+      {onMobileMenuClick && (
+        <Button
+          variant="outline"
+          size="icon"
+          className="shrink-0 md:hidden"
+          onClick={onMobileMenuClick}
+        >
+          <Menu className="h-5 w-5" />
+          <span className="sr-only">Toggle navigation menu</span>
+        </Button>
+      )}
       <div 
         ref={searchContainerRef}
         className="relative flex-1 md:grow-0 md:flex-initial"

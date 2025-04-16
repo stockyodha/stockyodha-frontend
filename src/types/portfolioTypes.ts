@@ -1,34 +1,47 @@
+import { StockRead } from './stockTypes'; // Assuming stockTypes.ts exists
 
-// Based on #/components/schemas/PortfolioRead
+// Based on openapi.json /components/schemas/PortfolioRead
 export interface PortfolioRead {
   name: string;
   description?: string | null;
-  id: string; // uuid
-  user_id: string; // uuid
-  created_at: string; // date-time
-  updated_at?: string | null; // date-time
-  // Frontend might augment this with holdings or performance data later
+  id: string; // UUID
+  user_id: string; // UUID
+  created_at: string; // ISO DateTime string
+  updated_at: string; // ISO DateTime string
+  is_default: boolean; // Added this field
 }
 
-// Based on #/components/schemas/PortfolioUpdate
-export interface PortfolioUpdate {
-  name?: string | null;
-  description?: string | null;
-}
-
-// Based on #/components/schemas/PortfolioCreate
+// Based on openapi.json /components/schemas/PortfolioCreate
 export interface PortfolioCreate {
   name: string;
   description?: string | null;
 }
 
-// Based on #/components/schemas/PortfolioPerformance
+// Based on openapi.json /components/schemas/HoldingRead
+export interface HoldingRead {
+  portfolio_id: string; // UUID
+  stock_symbol: string;
+  stock_exchange: string;
+  quantity: number;
+  average_buy_price: string; // Using string as API returns string representation of Decimal
+  stock?: StockRead | null; // Optional: Include stock details if API provides them later
+  current_price?: string | null; // Added for potential future use in displaying value
+  current_value?: string | null; // Added for potential future use in displaying value
+}
+
+// Based on openapi.json /components/schemas/PortfolioPerformance
 export interface PortfolioPerformance {
-  portfolio_id: string; // uuid
-  total_cost_basis: string; // decimal string
-  current_market_value: string; // decimal string
-  total_unrealized_pl: string; // decimal string
-  total_unrealized_pl_percentage?: string | null; // decimal string
-  calculation_timestamp: string; // date-time
-  missing_price_data: string[];
-} 
+    portfolio_id: string; // UUID
+    total_cost_basis: string; 
+    current_market_value: string;
+    total_unrealized_pl: string;
+    total_unrealized_pl_percentage: string | null;
+    calculation_timestamp: string; // ISO DateTime string
+    missing_price_data: string[]; // Array of stock symbols with missing prices
+}
+
+// If needed later
+// export interface PortfolioUpdate {
+//   name?: string | null;
+//   description?: string | null;
+// }

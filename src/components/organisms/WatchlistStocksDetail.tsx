@@ -117,8 +117,8 @@ const WatchlistStocksDetail: React.FC<WatchlistStocksDetailProps> = ({ watchlist
           <TableRow>
             <TableHead>Symbol</TableHead>
             <TableHead>Exchange</TableHead>
-            <TableHead>Name</TableHead>
-            <TableHead>Added</TableHead>
+            <TableHead className="hidden sm:table-cell">Name</TableHead>
+            <TableHead className="hidden sm:table-cell">Added</TableHead>
             <TableHead className="text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
@@ -127,8 +127,8 @@ const WatchlistStocksDetail: React.FC<WatchlistStocksDetailProps> = ({ watchlist
             <TableRow key={`${item.stock_exchange}-${item.stock_symbol}`}>
               <TableCell className="font-medium">{item.stock_symbol}</TableCell>
               <TableCell>{item.stock_exchange.toUpperCase()}</TableCell>
-              <TableCell>{item.stock?.name || 'N/A'}</TableCell>
-              <TableCell>{new Date(item.added_at).toLocaleDateString()}</TableCell>
+              <TableCell className="hidden sm:table-cell">{item.stock?.name || 'N/A'}</TableCell>
+              <TableCell className="hidden sm:table-cell">{new Date(item.added_at).toLocaleDateString()}</TableCell>
               <TableCell className="text-right">
                 <Button 
                   variant="ghost" 

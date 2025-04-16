@@ -64,7 +64,7 @@ export default function DashboardPage() {
   // --- Loading and Error States --- 
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
       {/* Balance/Earnings Card - Uses authStore data */}
       <Card className="lg:col-span-1 xl:col-span-1">
         <CardHeader className="pb-2">
