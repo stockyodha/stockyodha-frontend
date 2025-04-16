@@ -9,22 +9,28 @@ interface ProtectedRouteProps {
 const ProtectedRoute: React.FC<ProtectedRouteProps> = () => {
   // Use the reactive isAuthenticated value from the hook selector
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  // Get the hydration status
+  const hasHydrated = useAuthStore((state) => state._hasHydrated);
 
-  console.log('ProtectedRoute Render - isAuthenticated:', isAuthenticated);
+  console.log('ProtectedRoute Render - isAuthenticated:', isAuthenticated, 'hasHydrated:', hasHydrated);
 
-  // Remove the potentially stale getState() call
-  // const auth = useAuthStore.getState();
+  // Wait for hydration to complete before rendering based on auth state
+  if (!hasHydrated) {
+    console.log('ProtectedRoute: Waiting for hydration...');
+    // Render loading state or null while waiting for Zustand hydration
+    // Replace this with a proper loading spinner/component if desired
+    return <div>Loading session...</div>; 
+  }
 
-  // Use the reactive isAuthenticated directly in the condition
+  // Once hydrated, check authentication
   if (!isAuthenticated) {
-    console.log('ProtectedRoute: Not authenticated, redirecting to /login');
-    // Redirect them to the /login page, but save the current location they were
-    // trying to go to. This allows us to send them back after login.
+    console.log('ProtectedRoute: Hydrated, Not authenticated, redirecting to /login');
+    // Redirect them to the /login page
     return <Navigate to="/login" replace />;
   }
 
-  console.log('ProtectedRoute: Authenticated, rendering Outlet');
-  // If authenticated, render the child routes
+  console.log('ProtectedRoute: Hydrated, Authenticated, rendering Outlet');
+  // If hydrated and authenticated, render the child routes
   return <Outlet />;
 };
 

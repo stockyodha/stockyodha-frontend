@@ -124,7 +124,9 @@ export default function DashboardPage() {
         {isLoadingPortfolios ? null : ( // Don't show footer while loading portfolio list
           <CardFooter className="flex justify-end"> {/* Align button right */}
             {firstPortfolio ? (
-              <Button size="sm" asChild><Link to={`/portfolios/${firstPortfolio.id}`}>Manage Portfolio</Link></Button>
+              <Button size="sm" asChild className="w-full md:w-auto">
+                <Link to={`/portfolios/${firstPortfolio.id}`}>Manage Portfolio</Link>
+              </Button>
             ) : (
               // CTA Button with responsive width
               <Button size="sm" asChild className="w-full md:w-auto">
@@ -171,7 +173,9 @@ export default function DashboardPage() {
           <CardFooter className="flex justify-end"> {/* Align button right */}
             {firstWatchlist ? (
               watchlistStocks && watchlistStocks.length > 0 ? (
-                <Button size="sm" asChild><Link to={`/watchlists`}>View Watchlists</Link></Button>
+                <Button size="sm" asChild className="w-full md:w-auto">
+                  <Link to={`/watchlists`}>View Watchlists</Link>
+                </Button>
               ) : (
                 <Button size="sm" asChild className="w-full md:w-auto">
                   <Link to="/stocks">Add Stocks</Link>

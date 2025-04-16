@@ -51,8 +51,13 @@ export default function LoginPage() {
       const tokenData = await loginUser(values);
       console.log('LoginPage: Login API success, tokenData:', tokenData);
       setTokens(tokenData.access_token, tokenData.refresh_token);
+      
+      console.log('LoginPage: Tokens set, explicitly fetching user data...');
+      await useAuthStore.getState().fetchUser();
+      
       const newState = useAuthStore.getState();
-      console.log('LoginPage: State AFTER setTokens - isAuthenticated:', newState.isAuthenticated);
+      console.log('LoginPage: State AFTER fetchUser - isAuthenticated:', newState.isAuthenticated, 'User:', !!newState.user);
+      
       toast.success("Login successful!");
       navigate('/', { replace: true });
     } catch (err: any) {
