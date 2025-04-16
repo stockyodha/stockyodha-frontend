@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { getOrders, cancelOrder } from '@/services/orderService';
 import { OrderRead, OrderStatus } from '@/types/orderTypes';
 import { Button } from '@/components/ui/button';

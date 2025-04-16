@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import {
     PanelLeftClose,
     PanelLeftOpen,
-    Menu, // Icon for mobile toggle in Topbar
     LayoutDashboard,
     Briefcase,
     CandlestickChart,
