@@ -33,7 +33,7 @@ export function Sidebar({ className, isMobile = false, onLinkClick, isCollapsed 
         <div
             className={cn(
                 'h-full flex flex-col', // Use flex column layout
-                isMobile ? 'w-full' : 'relative h-screen border-r transition-all duration-300 ease-in-out', // Base styles
+                isMobile ? 'w-full' : 'sticky top-0 h-screen border-r transition-all duration-300 ease-in-out', // Make desktop sidebar sticky
                 isMobile ? '' : (isCollapsed ? 'w-16' : 'w-64'), // Desktop width
                 className
             )}

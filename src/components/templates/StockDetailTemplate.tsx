@@ -8,6 +8,8 @@ import StockAddressesMolecule from '@/components/molecules/StockAddressesMolecul
 import StockNewsOrganism from '@/components/organisms/StockNewsOrganism';
 import StockChartOrganism from '@/components/organisms/StockChartOrganism';
 import { Skeleton } from '@/components/ui/skeleton';
+import OrderBox from '@/components/organisms/OrderBox';
+// import OrderBox from '@/components/organisms/OrderBox/OrderBox'; // Removed import
 // Import other potential organisms like Chart, News etc. when created
 
 interface StockDetailTemplateProps {
@@ -65,10 +67,15 @@ const StockDetailTemplate: React.FC<StockDetailTemplateProps> = ({ stockData, is
           {/* Key Stats */}
           <StockKeyStatsMolecule stockInfo={stockData?.stock_info} isLoading={isLoading} />
 
-          {/* Placeholder for Order Entry Organism */}
-           <div className="h-64 bg-muted rounded-lg flex items-center justify-center">
-             <p className="text-muted-foreground">Order Box Placeholder</p>
-           </div>
+          {/* --- Order Box --- */}
+           {/* Render OrderBox only if we have symbol and exchange and not loading */}
+           {/* Pass required props */} 
+           {symbol && exchange && !isLoading ? (
+             <OrderBox stockSymbol={symbol} stockExchange={exchange} />
+           ) : isLoading ? (
+             // Show a skeleton while loading
+             <Skeleton className="h-96 w-full" /> // Adjust height as needed
+           ) : null }
 
            {/* Related News Section */}
            {/* Render only if exchange and symbol are available */}

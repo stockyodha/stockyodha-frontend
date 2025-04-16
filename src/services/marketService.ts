@@ -1,5 +1,5 @@
 import apiClient from "../config/api";
-import { TrendItem, TrendType, MarketIndex } from "../types/market";
+import { TrendItem, TrendType, MarketIndex, MarketStatusResponse } from "../types/market";
 
 const API_BASE_URL = "/market";
 
@@ -32,5 +32,22 @@ export const marketService = {
     }
   },
 
-  // TODO: Add getMarketStatus if needed later
+  /**
+   * Fetches the current market status.
+   * Corresponds to GET /api/v1/market/status
+   * @returns A promise that resolves to the MarketStatusResponse object.
+   */
+  getMarketStatus: async (): Promise<MarketStatusResponse> => {
+    try {
+      const response = await apiClient.get<MarketStatusResponse>(`${API_BASE_URL}/status`);
+      return response.data;
+    } catch (error) {
+      console.error(`Error fetching market status:`, error);
+      // Return a default UNKNOWN status in case of error
+      return {
+        status: 'UNKNOWN',
+        error: 'Failed to fetch market status'
+      };
+    }
+  }
 }; 
