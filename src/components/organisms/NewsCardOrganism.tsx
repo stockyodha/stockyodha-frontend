@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { Loader2, AlertTriangle, Newspaper, ChevronLeft, ChevronRight } from 'lucide-react';
+import { AlertTriangle, Newspaper, ChevronLeft, ChevronRight } from 'lucide-react';
 import { getRecentNews } from '@/services/newsService';
 import NewsListMolecule from '../molecules/NewsListMolecule';
 import { Button } from '@/components/ui/button';
